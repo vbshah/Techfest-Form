@@ -1,0 +1,89 @@
+<html>
+<head>
+		<title> dashboard </title>
+		<meta charset="utf-8">
+  		<meta name="viewport" content="width=device-width, initial-scale=1">
+  		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+ 		 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<?php
+	include 'db.php';
+	session_start();
+	if(!isset($_POST["key"])){
+		header("Location:key.php");
+	}
+	$key=$_POST["key"];
+	$str_key = array();
+	$str=file_get_contents("tech.dat");
+	$json=json_decode($str,true);
+	for($i=0;$i<count($json);$i++){
+		array_push($str_key,$json[$i]["Title"]);	
+	}
+	$str=file_get_contents("non-tech.dat");
+	$json=json_decode($str,true);
+	for($i=0;$i<count($json);$i++){
+		array_push($str_key,$json[$i]["Title"]);	
+	}
+	$str=file_get_contents("robotics.dat");
+	$json=json_decode($str,true);
+	for($i=0;$i<count($json);$i++){
+		array_push($str_key,$json[$i]["Title"]);	
+	}
+	$str=file_get_contents("workshop.dat");
+	$json=json_decode($str,true);
+	for($i=0;$i<count($json);$i++){
+		array_push($str_key,$json[$i]["Title"]);	
+	}
+	$str=file_get_contents("entre_sum.dat");
+	$json=json_decode($str,true);
+	for($i=0;$i<count($json);$i++){
+		array_push($str_key,$json[$i]["Title"]);	
+	}
+	array_push($str_key, "Mini Militia");
+	array_push($str_key,"C-Quiz & Debugging");
+	$flg=0;
+	for($i=0;$i<count($str_key);$i++){
+		//	echo $str_key[$i]."=> ".substr(md5($str_key[$i]),0,5)."<br>";
+		if(substr(md5($str_key[$i]),0,5)==$key){
+			$event=$str_key[$i];
+			$conn=mysqli_connect("localhost",$usrname,$pwd,"registration");
+			$result=mysqli_query($conn,"SELECT * from techfestdata where events='$event'");
+			$flg=1;
+			echo "<h2>Event-Name : ".$str_key[$i]."</h2><br>";
+			break;
+		}
+	}
+	if($flg==0) header("Location:key.php");
+
+?>
+			<table class="table table-bordered">
+				<tr>
+					<th> FIRSTNAME </th>
+					<th> EMAIL </th>
+					<th> PHONE </th>
+					<th> ENROLLMENT </th>
+					<th> COLLEGE </th>
+					<th> SEM </th>
+				</tr>
+				<?php
+				$cnt=0;
+				 while ($row=mysqli_fetch_assoc($result)) {
+					if(!empty($row["enroll"])){
+					echo '<tr><td>' .$row['firstname']. '</td>';
+					echo '<td>' .$row['email']. '</td>';
+					echo '<td>' .$row['phone']. '</td>';
+					echo '<td>' .$row['enroll']. '</td>';
+					echo '<td>' .$row['college']. '</td>';
+					echo '<td>' .$row['sem']. '</td></tr>';
+					$cnt++;
+					} 
+				}
+				echo "<h2>Total registration ".$cnt."</h2>";
+				?>
+			 </table>
+		</div>
+		</body>
+</html>

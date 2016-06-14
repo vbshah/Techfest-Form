@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Select Operation</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+<body background="bw1.jpg">
+	<center>
+		<div style="padding-top:10%">
+		<br><br>
+		<h1>Select Your operation</h1>
+		<br>		<br>
+
+		<a href="regis.php"<button type="button" class="btn btn-primary btn-block" style="width:50%;height:60px;font-size: 150%">New Registration</button></a>
+		<br><br>
+		<a href="edit.php"<button type="button" class="btn btn-primary btn-block" style="width:50%;height:60px;font-size: 150%">Edit Registration</button></a>
+		</div>
+	</center>
+</body>
+</html>
